@@ -12,7 +12,7 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
-size_t	reste_stash(char *stash)
+size_t	residue_stash(char *stash)
 {
 	size_t	res;
 	int		i;
@@ -60,10 +60,9 @@ char	*clear_stash(char *stash)
 	if (stash[i] == '\0')
 	{
 		free(stash);
-		stash = NULL;
 		return (NULL);
 	}
-	rest_len = reste_stash(stash);
+	rest_len = residue_stash(stash);
 	new_stash = malloc(sizeof(char) * rest_len + 1);
 	if (!new_stash)
 		return (NULL);

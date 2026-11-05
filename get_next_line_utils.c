@@ -6,7 +6,7 @@
 /*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:53:57 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/05 10:17:59 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/05 10:56:39 by mrburns          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_strlcpy(char *dst, const char *src, int size)
 	return ;
 }
 
-size_t	reste_stash(char *stash)
+size_t	new_stash(char *stash)
 {
 	size_t	res;
 	int		i;
@@ -120,7 +120,7 @@ char	*clear_stash(char *stash)
 		stash = NULL;
 		return (NULL);
 	}
-	rest_len = reste_stash(stash);
+	rest_len = new_stash(stash);
 	i = 0;
 	new_stash = malloc(sizeof(char) * rest_len + 1);
 	if (!new_stash)

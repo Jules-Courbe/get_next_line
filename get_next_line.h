@@ -6,7 +6,7 @@
 /*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 12:30:25 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/05 09:47:33 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/05 10:56:39 by mrburns          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_strlcat(char *dst, char *src, size_t size);
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
 char	*clear_stash(char *stash);
-size_t	reste_stash(char *stash);
+size_t	new_stash(char *stash);
 void	ft_strlcat(char *dst, char *src, size_t size);
 
 #endif 
