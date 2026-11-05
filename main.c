@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 12:35:19 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/05 09:39:01 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/05 22:23:52 by jucourbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,17 @@ int	main(int argc, char **argv)
 		perror("open");
 		return (1);
 	}
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+
+	/*
+	while (line)
 	{
-		printf("%s\n", line);
+		printf("%s", line);
 		free(line);
+		line = get_next_line(fd);
 	}
+	*/
+	free(line);	
 	close(fd);
 	return (0);
 }

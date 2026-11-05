@@ -57,6 +57,7 @@ char	*clear_stash(char *stash)
 	int		rest_len;
 
 	i = 0;
+	// ce code est utile ou pas ? 
 	if (stash[i] == '\0')
 	{
 		free(stash);
@@ -67,9 +68,7 @@ char	*clear_stash(char *stash)
 	if (!new_stash)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
-	{
 		i++;
-	}
 	ft_strlcpy(new_stash, &stash[i + 1], rest_len);
 	return (new_stash);
 }

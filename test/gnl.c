@@ -32,12 +32,8 @@ char	*get_next_line(int fd)
 	{
 		ret = read(fd, buf, BUFFER_SIZE);
 		buf[ret] = '\0';
-		if (ret > 0)
-		{
-			res = find_n(&stash); // je retourne jusqu a '\n' && res est malloc dans la fonction
-			stash = clear_stash(stash); // je retire ce qui a ete ecrit et garde si il y a un reste avec un '\n'
-		}
-		else if (ret == -1)
+		stash = ft_strjoin(stash, buf);
+		if (ret == -1)
 		{
 			free(buf);
 			return (NULL);
@@ -49,5 +45,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 	}
+	res = find_n(&stash); // je retourne jusqu a '\n' && res est malloc dans la fonction
+	stash = clear_stash(stash); // je retire ce qui a ete ecrit et garde si il y a un reste avec un '\n'
 	return (res);
 }

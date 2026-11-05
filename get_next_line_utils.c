@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:53:57 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/05 10:56:39 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/05 13:05:22 by jucourbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_strlcpy(char *dst, const char *src, int size)
 	return ;
 }
 
-size_t	new_stash(char *stash)
+size_t	calcul_stash(char *stash)
 {
 	size_t	res;
 	int		i;
@@ -112,15 +112,13 @@ char	*clear_stash(char *stash)
 	int		rest_len;
 
 	i = 0;
-	if (stash[i + 1] == '\0')
-		return (NULL);
 	if (stash[0] == '\0')
 	{
 		free(stash);
 		stash = NULL;
 		return (NULL);
 	}
-	rest_len = new_stash(stash);
+	rest_len = calcul_stash(stash);
 	i = 0;
 	new_stash = malloc(sizeof(char) * rest_len + 1);
 	if (!new_stash)

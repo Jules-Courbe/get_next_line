@@ -1,5 +1,5 @@
 CC = cc
-BUFFER_SIZE ?= 42
+BUFFER_SIZE ?= 11
 CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=$(BUFFER_SIZE)
 NAME = gnl
 
