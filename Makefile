@@ -1,12 +1,13 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+BUFFER_SIZE ?= 42
+CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=$(BUFFER_SIZE)
 NAME = gnl
 
-SRC = main.c get_next_line.c
+SRC = main.c get_next_line.c get_next_line_utils.c
 
 all: $(NAME)
 
-$(NAME): $(SRC) get_next_line_utils.h
+$(NAME): $(SRC) get_next_line.h
 	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
 
 clean:

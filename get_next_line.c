@@ -1,37 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/03 17:52:17 by mrburns           #+#    #+#             */
+/*   Updated: 2026/11/05 10:18:17 by mrburns          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "get_next_line.h"
 
-
-
-#include "get_next_line_utils.h"
-
-
-// apprendre a utiliser les variables statiques 
-
-// apprendre a utiliser la fonction read 
-
-// fichier free 
-
-// En cas d erreur il faut retourner NULL / return le '\n' de chaque ligne sauf si la fin du fichier est atteinte sans '\n'
-
-/*
-Compilation avec -D BUFFER_SIZE=n (taille du buffer de read()), mais 
-le projet doit aussi compiler sans ce flag, avec une valeur par défaut au choix.
-Lire le minimum possible à chaque appel : ne pas lire tout le fichier puis le découper.
-Tester avec des valeurs extrêmes de BUFFER_SIZE (1, 9999, 10000000).
-Comportement indéfini si le fichier est modifié entre deux appels ou si c’est un fichier binaire.
-
-Interdit : libft, lseek(), variables globales.
-*/
-
-void	read_file(char **argv)
+char	*find_n(char *stash)
 {
-	
+	char	*new_stash;
+	int		len_line;
+
+	len_line = 0;
+	if (stash == NULL || stash[0] == '\0')
+		return (NULL);
+	while (stash[len_line] && stash[len_line] != '\n')
+		len_line++;
+	new_stash = malloc(sizeof(char) * (len_line + 1));
+	if (!new_stash)
+		return (NULL);
+	ft_strlcpy(new_stash, stash, len_line + 1);
+	return (new_stash);
+}
+int		check_n(char *stash) // si stash ne contient pas \n je retourne 0
+{
+	int		i;
+
+	i = 0;
+	while(stash[i])
+	{
+		if (stash[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	printf("hello");
-	write(fd, "e", 1);
+	static char	*stash;
+	char		*buf;
+	int			ret;
+	char		*res;
 
-	return (NULL);
+	ret = 1;
+	res = NULL;
+	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	while (stash == NULL || check_n(stash) == 0) // On boucle tant que stash est NULL ou que stash na pas de '\n' trouver
+	{
+		ret = read(fd, buf, BUFFER_SIZE);
+		if (!stash)
+		{
+			stash = malloc(sizeof(char) * 1);
+			stash[0] = '\0';
+		}
+		if (ret == 0)
+		{
+			res = stash;
+			stash = NULL;
+			return (res);
+		}
+		if (ret == -1)
+		{
+			free(buf);
+			return (NULL);
+		}
+		buf[ret] = '\0';
+		stash = ft_strjoin(stash, buf);
+	}
+	free(buf);
+	res = find_n(stash); // je retourne jusqu a '\n' && res est malloc dans la fonction
+	stash = clear_stash(stash); // je retire ce qui a ete ecrit et garde si il y a un reste avec un '\n'
+	return (res);
 }
