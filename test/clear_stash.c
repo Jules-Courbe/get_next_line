@@ -61,6 +61,7 @@ char	*clear_stash(char *stash)
 	if (stash[i] == '\0')
 	{
 		free(stash);
+		stash = NULL;
 		return (NULL);
 	}
 	rest_len = residue_stash(stash);
@@ -76,5 +77,5 @@ char	*clear_stash(char *stash)
 int main()
 {
 	char stash[15] = "Hello ca";
-	printf("%s\n", clear_stash(stash));
+	printf("%s", clear_stash(stash));
 }

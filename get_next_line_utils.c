@@ -6,7 +6,7 @@
 /*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:53:57 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/05 13:05:22 by jucourbe         ###   ########.fr       */
+/*   Updated: 2026/11/06 12:58:38 by jucourbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_strlcat(char *dst, char *src, size_t size)
 	j = 0;
 	if (size == 0)
 		return ;
-	while (dst[j] && j < size)
+	while (j < size && dst[j])
 		j++;
 	len_dst = j;
 	if (len_dst == size)
@@ -58,7 +58,7 @@ char	*ft_strjoin(char *stash, char *buf)
 	if (!new)
 		return (NULL);
 	new[0] = '\0';
-	ft_strlcat(new, stash, (ft_strlen(stash) + ft_strlen(stash) + 1));
+	ft_strlcat(new, stash, (ft_strlen(stash) + ft_strlen(buf) + 1));
 	ft_strlcat(new, buf, (ft_strlen(stash) + ft_strlen(buf) + 1));
 	free(stash);
 	return (new);
@@ -99,7 +99,7 @@ size_t	calcul_stash(char *stash)
 		i++;
 	}
 	if (stash[i] == '\n')
-		res -= i + 1;
+		res -= i - 1;
 	else
 		res -= i;
 	return (res);
@@ -107,28 +107,24 @@ size_t	calcul_stash(char *stash)
 
 char	*clear_stash(char *stash)
 {
-	char 	*new_stash;
+	char	*rest;
 	int		i;
-	int		rest_len;
+	int		j;
 
 	i = 0;
-	if (stash[0] == '\0')
-	{
-		free(stash);
-		stash = NULL;
-		return (NULL);
-	}
-	rest_len = calcul_stash(stash);
-	i = 0;
-	new_stash = malloc(sizeof(char) * rest_len + 1);
-	if (!new_stash)
-		return (NULL);
 	while (stash[i] && stash[i] != '\n')
-	{
 		i++;
-	}
-	ft_strlcpy(new_stash, &stash[i + 1], rest_len);
+	if (!stash[i])
+		return (free(stash), NULL);
+	rest = malloc(ft_strlen(stash) - i);	/* len - (i + 1) + 1 */
+	if (!rest)
+		return (free(stash), NULL);
+	i++;
+	j = 0;
+	while (stash[i])
+		rest[j++] = stash[i++];
+	rest[j] = '\0';
 	free(stash);
-	return (new_stash);
+	return (rest);
 }
 

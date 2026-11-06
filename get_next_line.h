@@ -6,7 +6,7 @@
 /*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 12:30:25 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/05 11:15:14 by jucourbe         ###   ########.fr       */
+/*   Updated: 2026/11/06 12:20:03 by jucourbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@
 
 // char	*ft_strchr(const char *s, int c);
 void	ft_strlcpy(char *dst, const char *src, int size);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char *stash, char *buf);
 void	ft_strlcat(char *dst, char *src, size_t size);
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
 char	*clear_stash(char *stash);
 size_t	new_stash(char *stash);
-void	ft_strlcat(char *dst, char *src, size_t size);
 
 #endif 

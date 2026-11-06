@@ -16,7 +16,7 @@ int		check_n(char *stash) // si stash ne contient pas \n je retourne 0
 	return (0);
 }
 
-char	*get_next_line(int fd)
+char	*bonjour(int fd)
 {
 	static char	*stash;
 	char		*buf;
