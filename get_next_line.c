@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:52:17 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/06 13:09:06 by jucourbe         ###   ########.fr       */
+/*   Updated: 2026/11/08 10:55:02 by mrburns          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ char	*find_n(char *stash)
 	char	*new_stash;
 	int		len_line;
 
+	if (!stash || stash[0] == '\0')
+		return (NULL);
 	len_line = 0;
-	//if (stash == NULL || stash[0] == '\0')
-	//return (NULL);
 	while (stash[len_line] && stash[len_line] != '\n')
 		len_line++;
 	new_stash = malloc(sizeof(char) * (len_line + 2));
