@@ -6,7 +6,7 @@
 /*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:52:17 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/08 10:55:02 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/08 10:59:02 by mrburns          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ char	*find_n(char *stash)
 	len_line = 0;
 	while (stash[len_line] && stash[len_line] != '\n')
 		len_line++;
-	new_stash = malloc(sizeof(char) * (len_line + 2));
+	if (stash[len_line] == '\n')
+		len_line++;
+	new_stash = malloc(sizeof(char) * (len_line + 1));
 	if (!new_stash)
 		return (NULL);
-	ft_strlcpy(new_stash, stash, len_line + 2);
+	ft_strlcpy(new_stash, stash, len_line + 1);
 	return (new_stash);
 }
 int		check_n(char *stash) // si stash ne contient pas \n je retourne 0
@@ -63,7 +65,10 @@ char	*get_next_line(int fd)
 	{
 		stash = malloc(1);
 		if (!stash)
+		{
+			free(buf);
 			return (NULL);
+		}
 		stash[0] = '\0';
 	}
 	// probleme avec ret qui se remet toujours en positif 
