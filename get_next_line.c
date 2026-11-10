@@ -6,7 +6,7 @@
 /*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:52:17 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/08 10:59:02 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/10 20:30:53 by mrburns          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ char	*get_next_line(int fd)
 	ret = 1;
 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
+	{
+		free(stash);
+		stash = NULL;
 		return (NULL);
+	}
 	if (!stash)
 	{
 		stash = malloc(1);
@@ -95,6 +99,12 @@ char	*get_next_line(int fd)
 	}
 	free(buf);
 	res = find_n(stash); // je retourne jusqu a '\n' && res est malloc dans la fonction
+	if (!res)
+	{
+		free(stash);
+		stash = NULL;
+		return (NULL);
+	}
 	stash = clear_stash(stash); // je retire ce qui a ete ecrit et garde si il y a un reste avec un '\n'
 	return (res);
 }
