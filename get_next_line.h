@@ -6,23 +6,22 @@
 /*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 12:30:25 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/06 12:20:03 by jucourbe         ###   ########.fr       */
+/*   Updated: 2026/11/12 15:00:15 by jucourbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef BUFFER_SIZE
+#ifndef BUFFER_SIZE
 # define BUFFER_SIZE 11
-# endif 
+#endif 
 
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 
-// char	*ft_strchr(const char *s, int c);
 void	ft_strlcpy(char *dst, const char *src, int size);
 char	*ft_strjoin(char *stash, char *buf);
 void	ft_strlcat(char *dst, char *src, size_t size);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:52:17 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/10 20:30:53 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/12 15:29:13 by jucourbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,65 +46,72 @@ int		check_n(char *stash) // si stash ne contient pas \n je retourne 0
 	return (0);
 }
 
+int	update_stash(char **stash, char *buf)
+{
+	char	*tmp;
+
+	if (!*stash)
+	{
+		*stash = malloc(1);
+		if (!*stash)
+			return (1);
+		(*stash)[0] = '\0';
+	}
+	tmp = ft_strjoin(*stash, buf);
+	if (!tmp)
+		return (1);
+	free(*stash);
+	*stash = tmp;
+	return (0);
+}
+
+int	join_buff_to_stash(char **stash, int fd, int ret)
+{
+	char	*buf;
+
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (free(*stash), *stash = NULL, 1);
+	while (!check_n(*stash) && ret > 0)
+	{
+		ret = read(fd, buf, BUFFER_SIZE);
+		if (ret == -1)
+			return (free(buf), free(*stash), *stash = NULL, 1);
+		buf[ret] = '\0';
+		if (ret == 0)
+			break ;
+		if (update_stash(stash, buf))
+			return (free(buf), free(*stash), *stash = NULL, 1);
+	}
+	free(buf);
+	return (0);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	char		*buf;
-	int			ret;
 	char		*res;
-	char 		*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	res = NULL;
-	ret = 1;
-	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buf)
-	{
-		free(stash);
-		stash = NULL;
-		return (NULL);
-	}
 	if (!stash)
 	{
 		stash = malloc(1);
 		if (!stash)
-		{
-			free(buf);
 			return (NULL);
-		}
 		stash[0] = '\0';
 	}
-	// probleme avec ret qui se remet toujours en positif 
-	while (check_n(stash) == 0 && ret > 0)
-	{
-		ret = read(fd, buf, BUFFER_SIZE);
-		if (ret == -1)
-		{
-			free(buf);
-			free(stash);
-			stash = NULL;
-			return (NULL);
-		}
-		buf[ret] = '\0';
-		tmp = ft_strjoin(stash, buf);
-		if (!tmp)
-		{
-			free(buf);
-			free(stash);
-			stash = NULL;
-			return (NULL);
-		}
-		stash = tmp;
-	}
-	free(buf);
-	res = find_n(stash); // je retourne jusqu a '\n' && res est malloc dans la fonction
+	if (join_buff_to_stash(&stash, fd, 1) == 1)
+		return (NULL);
+	if (!stash || stash[0] == '\0')
+	return (free(stash), stash = NULL, NULL);
+	res = find_n(stash);
 	if (!res)
 	{
 		free(stash);
 		stash = NULL;
 		return (NULL);
 	}
-	stash = clear_stash(stash); // je retire ce qui a ete ecrit et garde si il y a un reste avec un '\n'
+	stash = clear_stash(stash);
 	return (res);
 }

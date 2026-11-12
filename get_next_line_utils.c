@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:53:57 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/08 10:44:24 by mrburns          ###   ########.fr       */
+/*   Updated: 2026/11/12 15:15:04 by jucourbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,19 @@ void	ft_strlcat(char *dst, char *src, size_t size)
 	return ;
 }
 
-char	*ft_strjoin(char *stash, char *buf)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*new;
+	char	*str;
 
-	new = malloc(sizeof(char) * (ft_strlen(stash) + ft_strlen(buf) + 1));
-	if (!new)
+	if (!s1 || !s2)
 		return (NULL);
-	new[0] = '\0';
-	ft_strlcat(new, stash, (ft_strlen(stash) + ft_strlen(buf) + 1));
-	ft_strlcat(new, buf, (ft_strlen(stash) + ft_strlen(buf) + 1));
-	free(stash);
-	return (new);
+	str = malloc(sizeof(char) * (ft_strlen(s1)
+				+ ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
+	ft_strlcat(str, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (str);
 }
 
 void	ft_strlcpy(char *dst, const char *src, int size)
