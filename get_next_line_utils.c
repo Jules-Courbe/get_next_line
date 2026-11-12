@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucourbe <jucourbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrburns <mrburns@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:53:57 by mrburns           #+#    #+#             */
-/*   Updated: 2026/11/12 15:15:04 by jucourbe         ###   ########.fr       */
+/*   Updated: 2026/11/12 17:22:08 by mrburns          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 void	ft_strlcat(char *dst, char *src, size_t size)
 {
@@ -47,21 +35,27 @@ void	ft_strlcat(char *dst, char *src, size_t size)
 		j++;
 	}
 	dst[j] = '\0';
-	return ;
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
+	int		len_s1;
+	int		len_s2;
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(s1)
-				+ ft_strlen(s2) + 1));
+	len_s1 = 0;
+	len_s2 = 0;
+	while (s1[len_s1])
+		len_s1++;
+	while (s2[len_s2])
+		len_s2++;
+	str = malloc(sizeof(char) * (len_s1 + len_s2 + 1));
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
-	ft_strlcat(str, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	ft_strlcpy(str, s1, len_s1 + 1);
+	ft_strlcat(str, s2, len_s1 + len_s2 + 1);
 	return (str);
 }
 
@@ -79,53 +73,43 @@ void	ft_strlcpy(char *dst, const char *src, int size)
 		}
 		dst[i] = '\0';
 	}
-	i = 0;
-	while (src[i])
-		i++;
-	return ;
 }
 
-size_t	calcul_stash(char *stash)
+static char	*copy_rest(char *stash, int start)
 {
-	size_t	res;
-	int		i;
+	char	*rest;
+	int		j;
+	int		len;
 
-	i = 0;
-	if (!stash)
-		return (0);
-	res = 0;
-	res = ft_strlen(stash); // nb de caractere sans '\0'
-	while (stash[i] && stash[i] != '\n')
+	len = 0;
+	while (stash[start + len])
+		len++;
+	rest = malloc(len + 1);
+	if (!rest)
+		return (NULL);
+	j = 0;
+	while (stash[start + j])
 	{
-		i++;
+		rest[j] = stash[start + j];
+		j++;
 	}
-	if (stash[i] == '\n')
-		res -= i - 1;
-	else
-		res -= i;
-	return (res);
+	rest[j] = '\0';
+	return (rest);
 }
 
 char	*clear_stash(char *stash)
 {
-	char	*rest;
 	int		i;
-	int		j;
+	char	*rest;
 
+	if (!stash)
+		return (NULL);
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	if (!stash[i])
+	if (!stash[i] || !stash[i + 1])
 		return (free(stash), NULL);
-	rest = malloc(ft_strlen(stash) - i);	/* len - (i + 1) + 1 */
-	if (!rest)
-		return (free(stash), NULL);
-	i++;
-	j = 0;
-	while (stash[i])
-		rest[j++] = stash[i++];
-	rest[j] = '\0';
+	rest = copy_rest(stash, i + 1);
 	free(stash);
 	return (rest);
 }
-

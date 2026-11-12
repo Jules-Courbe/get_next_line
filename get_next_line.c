@@ -30,14 +30,15 @@ char	*find_n(char *stash)
 	ft_strlcpy(new_stash, stash, len_line + 1);
 	return (new_stash);
 }
-int		check_n(char *stash) // si stash ne contient pas \n je retourne 0
+
+int	check_n(char *stash)
 {
 	int		i;
 
 	i = 0;
 	if (!stash)
-		return(0);
-	while(stash[i])
+		return (0);
+	while (stash[i])
 	{
 		if (stash[i] == '\n')
 			return (1);
@@ -94,17 +95,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!stash)
-	{
-		stash = malloc(1);
-		if (!stash)
-			return (NULL);
-		stash[0] = '\0';
-	}
 	if (join_buff_to_stash(&stash, fd, 1) == 1)
 		return (NULL);
 	if (!stash || stash[0] == '\0')
-	return (free(stash), stash = NULL, NULL);
+		return (free(stash), stash = NULL, NULL);
 	res = find_n(stash);
 	if (!res)
 	{
